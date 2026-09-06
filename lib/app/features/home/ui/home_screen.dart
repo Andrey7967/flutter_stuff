@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_applab_1/app/extensions/extensions.dart';
 import 'package:flutter_applab_1/app/features/home/data/mock/mock.dart';
+import 'package:flutter_applab_1/app/features/home/ui/dish_detail.dart';
 import 'package:flutter_applab_1/app/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,7 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
               primary: false,
               shrinkWrap: true,
               itemCount: mockDishes.length,
-              itemBuilder: (_, index) => DishCard(dish: mockDishes[index]),
+              itemBuilder: (_, index) => DishCard(
+                dish: mockDishes[index],
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DishDetailScreen(dish: mockDishes[index]),
+                    ),
+                  );
+                },
+              ),
               separatorBuilder: (_, __) => 16.ph,
             ),
           ],

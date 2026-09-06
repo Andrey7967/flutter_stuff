@@ -4,6 +4,7 @@ class DishModel {
   final String description;
   final String imagePath;
   final double price;
+  final int calories;
 
   const DishModel({
     required this.id,
@@ -11,6 +12,7 @@ class DishModel {
     required this.description,
     required this.imagePath,
     required this.price,
+    required this.calories,
   });
 
   String get formattedPrice => '${price.toStringAsFixed(0)} ₽';

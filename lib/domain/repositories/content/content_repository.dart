@@ -25,4 +25,19 @@ class ContentRepository implements ContentRepositoryInterface {
       return item.copyWith(image: fullImageUrl);
     }).toList();
   }
+
+  @override
+  Future<Content> getContentById(int id) async {
+    final response = await _dio.get('/content/$id');
+    final data = response.data['data'];
+    final baseUrl = _dio.options.baseUrl;
+
+    final item = Content.fromJson(data as Map<String, dynamic>);
+    final rawPath = item.image;
+    final fullImageUrl = rawPath.startsWith('http')
+        ? rawPath
+        : '$baseUrl${rawPath.startsWith('/') ? '' : '/'}$rawPath';
+
+    return item.copyWith(image: fullImageUrl);
+  }
 }

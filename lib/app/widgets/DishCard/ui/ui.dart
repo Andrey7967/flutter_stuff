@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_applab_1/domain/repositories/content/model/content.dart';
+import 'package:flutter_applab_1/app/extensions/widget_extensions.dart';
 
 class DishCard extends StatelessWidget {
   final Content dish;
   final VoidCallback? onTap;
 
   const DishCard({super.key, required this.dish, this.onTap});
+
+  String get _displayPrice {
+    if (dish.price != null && dish.price! > 0) {
+      return '${dish.price!.toInt()} ₽';
+    }
+    return dish.formattedPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +34,15 @@ class DishCard extends StatelessWidget {
                 height: imageSize,
                 width: imageSize,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(Icons.fastfood),
+                errorBuilder: (_, __, ___) => Container(
+                  height: imageSize,
+                  width: imageSize,
+                  color: Colors.grey[200],
+                  child: const Icon(Icons.fastfood, color: Colors.grey),
+                ),
               ),
             ),
-            const SizedBox(width: 16),
+            16.pw,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +53,7 @@ class DishCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 4),
+                  4.ph,
                   Expanded(
                     child: Text(
                       dish.description,
@@ -49,11 +62,12 @@ class DishCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                  4.ph,
                   Text(
-                    dish.formattedPrice,
+                    _displayPrice,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                   ),
                 ],

@@ -22,15 +22,19 @@ class Content {
     this.calories,
   });
 
-  String get imagePath => image;
-
-  String get formattedPrice =>
-      price != null && price! > 0 ? '${price!.toInt()} ₽' : author;
-
   factory Content.fromJson(Map<String, dynamic> json) =>
       _$ContentFromJson(json);
 
   Map<String, dynamic> toJson() => _$ContentToJson(this);
+
+  String get imagePath => image;
+
+  String get formattedPrice {
+    if (price != null && price! > 0) {
+      return '${price!.toInt()} ₽';
+    }
+    return author.isNotEmpty ? author : 'Бесплатно';
+  }
 
   Content copyWith({
     int? id,

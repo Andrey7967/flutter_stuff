@@ -12,6 +12,8 @@ Content _$ContentFromJson(Map<String, dynamic> json) => Content(
       author: json['author'] as String,
       description: json['description'] as String,
       image: json['image'] as String,
+      price: (json['price'] as num?)?.toDouble(),
+      calories: (json['calories'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
@@ -20,4 +22,6 @@ Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'author': instance.author,
       'description': instance.description,
       'image': instance.image,
+      'price': instance.price,
+      'calories': instance.calories,
     };

@@ -1,22 +1,28 @@
 import 'package:dio/dio.dart';
-import '../../../../data/dio/endpoints.dart';
 import 'content_repository_interface.dart';
 import 'model/content.dart';
 
 class ContentRepository implements ContentRepositoryInterface {
-  ContentRepository({required this.dio});
-  final Dio dio;
+  final Dio _dio;
+
+  ContentRepository({required Dio dio}) : _dio = dio;
 
   @override
   Future<List<Content>> getContent() async {
-    try {
-      final Response response = await dio.get(Endpoints.content);
-      final content = (response.data['data'] as List)
-          .map((e) => Content.fromJson(e as Map<String, dynamic>))
-          .toList();
-      return content;
-    } on DioException catch (e) {
-      throw e.message.toString();
-    }
+    final response = await _dio.get('/content');
+    final List data = response.data['data'];
+
+    final baseUrl = _dio.options.baseUrl;
+
+    return data.map((json) {
+      final item = Content.fromJson(json as Map<String, dynamic>);
+      final rawPath = item.image;
+
+      final fullImageUrl = rawPath.startsWith('http')
+          ? rawPath
+          : '$baseUrl${rawPath.startsWith('/') ? '' : '/'}$rawPath';
+
+      return item.copyWith(image: fullImageUrl);
+    }).toList();
   }
 }

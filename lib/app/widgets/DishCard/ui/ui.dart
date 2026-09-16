@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_applab_1/app/entities/entities.dart';
+import 'package:flutter_applab_1/domain/repositories/content/model/content.dart';
 
 class DishCard extends StatelessWidget {
-  final DishModel dish;
+  final Content dish;
   final VoidCallback? onTap;
 
   const DishCard({super.key, required this.dish, this.onTap});
@@ -22,11 +21,12 @@ class DishCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
+              child: Image.network(
                 dish.imagePath,
                 height: imageSize,
                 width: imageSize,
                 fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const Icon(Icons.fastfood),
               ),
             ),
             const SizedBox(width: 16),
@@ -52,9 +52,9 @@ class DishCard extends StatelessWidget {
                   Text(
                     dish.formattedPrice,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
                   ),
                 ],
               ),

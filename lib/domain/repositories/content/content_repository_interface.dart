@@ -1,5 +1,5 @@
 import 'model/content.dart';
 
-abstract interface class ContentRepositoryInterface {
+abstract class ContentRepositoryInterface {
   Future<List<Content>> getContent();
 }

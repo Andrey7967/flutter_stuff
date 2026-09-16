@@ -3,6 +3,7 @@ import 'package:flutter_applab_1/app/app.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../di/di.dart';
 import '../bloc/home_bloc.dart';
+import "../../../widgets/DishCard/dish_card.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,15 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
             primary: false,
             shrinkWrap: true,
             itemCount: content.length,
-            itemBuilder: (_, index) => Card(
-              child: ListTile(
-                title: Text(content[index].title),
-                subtitle: Text(content[index].description),
-                leading: Image.network(
-                  content[index].image,
-                  errorBuilder: (_, __, ___) => const Icon(Icons.fastfood),
-                ),
-              ),
+            itemBuilder: (_, index) => DishCard(
+              dish: content[index],
+              onTap: () {},
             ),
             separatorBuilder: (_, __) => 16.ph,
           ),

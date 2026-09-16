@@ -6,8 +6,8 @@ final Dio dio = Dio();
 void setUpDio() {
   dio.options.baseUrl = 'https://flutter-essen-backend.onrender.com';
 
-  dio.options.connectTimeout = const Duration(seconds: 5);
-  dio.options.receiveTimeout = const Duration(seconds: 5);
+  dio.options.connectTimeout = const Duration(seconds: 15);
+  dio.options.receiveTimeout = const Duration(seconds: 15);
 
   dio.interceptors.add(
     TalkerDioLogger(
